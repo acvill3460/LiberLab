@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIBERLAB 2026–27 · Laboratori III Liceo · Alfieri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:     #f7f3ec;
+  --cream-dark:#ede8df;
+  --ink:       #1c1a16;
+  --ink-soft:  #4a4640;
+  --ink-faint: #8a8480;
+  --gold:      #c09a4a;
+  --gold-light:#f0e6cc;
+  --ita-hue:   #8c2a2a;
+  --ita-mid:   #b84040;
+  --ita-pale:  #f8efef;
+  --lat-hue:   #1e4d35;
+  --lat-mid:   #2e7050;
+  --lat-pale:  #edf5f0;
+  --border:    rgba(28,26,22,.12);
+  --shadow:    0 4px 24px rgba(28,26,22,.08);
+  --ff-head:   'Playfair Display', Georgia, serif;
+  --ff-body:   'Lora', Georgia, serif;
+  --ff-mono:   'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(140,42,42,.35) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 50%, rgba(30,77,53,.35) 0%, transparent 60%);
+}
+.masthead-inner {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 64px 40px 56px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+}
+.masthead-kicker {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.masthead h1 {
+  font-family: var(--ff-head);
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -.01em;
+}
+.masthead h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.masthead-sub {
+  margin-top: 16px;
+  font-family: var(--ff-body);
+  font-size: 15px;
+  font-style: italic;
+  color: rgba(247,243,236,.65);
+  max-width: 480px;
+}
+.masthead-meta {
+  text-align: right;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: rgba(247,243,236,.45);
+  line-height: 2;
+  white-space: nowrap;
+}
+.masthead-meta strong {
+  color: var(--gold);
+  display: block;
+  font-size: 22px;
+  letter-spacing: -.01em;
+  font-family: var(--ff-head);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* ── STICKY NAV ── */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  display: flex;
+  justify-content: center;
+  gap: 0;
+}
+.nav-btn {
+  padding: 14px 32px;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(247,243,236,.5);
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color .2s, background .2s;
+  border-bottom: 3px solid transparent;
+  position: relative;
+}
+.nav-btn:hover { color: var(--cream); }
+.nav-btn.ita { border-color: transparent; }
+.nav-btn.ita:hover, .nav-btn.ita.active { color: var(--ita-mid); border-color: var(--ita-mid); }
+.nav-btn.lat:hover, .nav-btn.lat.active { color: var(--lat-mid); border-color: var(--lat-mid); }
+.nav-btn.all:hover, .nav-btn.all.active { color: var(--gold); border-color: var(--gold); }
+
+/* ── NOTICE ── */
+.notice-bar {
+  background: var(--gold-light);
+  border-bottom: 1px solid var(--gold);
+  padding: 10px 40px;
+  text-align: center;
+  font-family: var(--ff-mono);
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  color: var(--ink-soft);
+}
+.notice-bar strong { color: var(--ink); }
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ── SECTION HEADER ── */
+.section-header {
+  padding: 64px 0 32px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+.section-stripe {
+  width: 5px;
+  height: 100%;
+  min-height: 60px;
+  border-radius: 3px;
+}
+.section-ita .section-stripe { background: linear-gradient(180deg, var(--ita-hue), var(--ita-mid)); }
+.section-lat .section-stripe { background: linear-gradient(180deg, var(--lat-hue), var(--lat-mid)); }
+
+.section-label {
+  font-family: var(--ff-mono);
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.section-ita .section-label { color: var(--ita-mid); }
+.section-lat .section-label { color: var(--lat-mid); }
+
+.section-title {
+  font-family: var(--ff-head);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.section-desc {
+  margin-top: 6px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+/* ── CARDS GRID ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* ── SINGLE CARD ── */
+.card {
+  background: white;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform .25s, box-shadow .25s;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .5s ease, transform .5s ease, box-shadow .25s, border-color .25s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(28,26,22,.13);
+}
+.card.hidden { display: none; }
+
+.card-top {
+  height: 5px;
+  flex-shrink: 0;
+}
+.section-ita .card-top { background: linear-gradient(90deg, var(--ita-hue), var(--ita-mid)); }
+.section-lat .card-top { background: linear-gradient(90deg, var(--lat-hue), var(--lat-mid)); }
+
+.card-body { padding: 22px 22px 18px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+.card-ambito-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tag {
+  font-family: var(--ff-mono);
+  font-size: 9.5px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.tag-ambito {
+  background: var(--cream-dark);
+  color: var(--ink-soft);
+}
+.section-ita .tag-hours { background: var(--ita-pale); color: var(--ita-hue); }
+.section-lat .tag-hours { background: var(--lat-pale); color: var(--lat-hue); }
+
+.card-title {
+  font-family: var(--ff-head);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.card-expert {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.card-expert::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.card-desc {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  flex: 1;
+}
+.card-desc strong {
+  display: block;
+  font-family: var(--ff-mono);
+  font-size: 9.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 10px;
+  margin-bottom: 3px;
+}
+
+.card-activities {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.card-activities ul {
+  padding-left: 16px;
+  margin-top: 4px;
+}
+.card-activities ul li { margin-bottom: 2px; }
+
+.card-product {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+.card-product .icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.card-product span { font-style: italic; }
+
+.card-wip {
+  background: var(--cream);
+  padding: 10px 14px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+/* ── PERIODI ── */
+.periodi-section {
+  margin-top: 64px;
+  padding: 32px 36px;
+  background: var(--ink);
+  border-radius: 4px;
+  color: var(--cream);
+}
+.periodi-section h3 {
+  font-family: var(--ff-head);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--gold);
+  font-style: italic;
+}
+.periodi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media(max-width:600px){ .periodi-grid { grid-template-columns: 1fr; } }
+.periodo {
+  border-left: 3px solid var(--gold);
+  padding-left: 14px;
+}
+.periodo-n {
+  font-family: var(--ff-mono);
+  font-size: 9.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.periodo-date {
+  font-family: var(--ff-head);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.periodo-note {
+  font-size: 12.5px;
+  color: rgba(247,243,236,.5);
+  margin-top: 3px;
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 32px 20px;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--border);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:680px){
+  .masthead-inner { grid-template-columns: 1fr; }
+  .masthead-meta { text-align: left; }
+  .main { padding: 0 16px 60px; }
+  .notice-bar { padding: 10px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ───────────── MASTHEAD ───────────── -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <div class="masthead-kicker">Liceo Classico Alfieri · Torino · a.s. 2026–27</div>
+      <h1>LIBER<em>LAB</em></h1>
+      <p class="masthead-sub">Catalogo dei laboratori per le classi terze — scegli tre attività che vuoi vivere quest'anno</p>
+    </div>
+    <div class="masthead-meta">
+      <strong>20</strong>
+      laboratori disponibili<br>
+      III Liceo<br>
+      Italiano · Latino · Greco
+    </div>
+  </div>
+</header>
+
+<!-- ───────────── NAV ───────────── -->
+<nav class="nav-bar">
+  <button class="nav-btn all active" onclick="filtra('all', this)">Tutti i lab</button>
+  <button class="nav-btn ita" onclick="filtra('ita', this)">Area Italiano</button>
+  <button class="nav-btn lat" onclick="filtra('lat', this)">Area Latino &amp; Greco</button>
+</nav>
+
+<div class="notice-bar">
+  Leggi le descrizioni, poi compila il modulo di scelta con il <strong>link personale</strong> che hai ricevuto per email &nbsp;·&nbsp; Scegli <strong>3 laboratori</strong> più una riserva
+</div>
+
+<!-- ───────────── MAIN ───────────── -->
+<main class="main">
+
+  <!-- ═══ SEZIONE ITALIANO ═══ -->
+  <section class="section-ita" id="italiano">
+    <div class="section-header">
+      <div class="section-stripe"></div>
+      <div>
+        <div class="section-label">Area Linguaggi e Comunicazione</div>
+        <div class="section-title">Laboratori di Italiano</div>
+        <div class="section-desc">Letteratura, voce, teatro, giornalismo, cinema e parola scritta</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <!-- 1 IN VIAGGIO CON ULISSE -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Letteratura · Role Gaming</span>
+            <span class="tag tag-hours">7–10 ore</span>
+          </div>
+          <div class="card-title">In viaggio con Ulisse</div>
+          <div class="card-expert">Alberto Borgatta</div>
+          <div class="card-desc">
+            Qual è stato davvero il viaggio di Ulisse? Si parte dall'Odissea per esplorare le <em>geografie omeriche</em> e le <em>geografie letterarie</em>: i luoghi del mito a confronto con le interpretazioni di poeti, romanzieri e viaggiatori nel tempo.
+            <strong>Prodotto finale</strong>
+          </div>
+          <div class="card-product">
+            <span class="icon">🎲</span>
+            <span>Gioco da tavolo o role game ambientato nelle geografie del mito</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 LA PAROLA È CORPO -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Lettura espressiva</span>
+            <span class="tag tag-hours">7–10 ore</span>
+          </div>
+          <div class="card-title">La parola è corpo</div>
+          <div class="card-expert">Francesca Bracchini</div>
+          <div class="card-desc">
+            La parola poetica come evento fisico e sonoro. Si lavora su testi di Dante, Pavese, Szymborska, Gualtieri: poeti lontanissimi tra loro, uniti dal corpo che vibra nella lingua.
+            <strong>Attività</strong>
+          </div>
+          <div class="card-activities">
+            Esercizi sul respiro e sulla voce; lettura guidata e commentata; produzione individuale di un testo a partire dalle suggestioni dei poeti incontrati.
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 LEGG'IO -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Lettura espressiva</span>
+            <span class="tag tag-hours">7–10 ore</span>
+          </div>
+          <div class="card-title">Legg'io</div>
+          <div class="card-expert">Francesca Di Giorgio (Legg'io)</div>
+          <div class="card-desc">
+            Un percorso tecnico e creativo sulla voce: come funziona davvero la lettura ad alta voce? Si lavora su respirazione, riscaldamento vocale, ortoepia e fonetica italiana.
+            <strong>Tecniche affrontate</strong>
+          </div>
+          <div class="card-activities">
+            Dizione, accento tonico e fonico, suoni della lingua italiana, raddoppiamento fonosintattico, articolazione; elementi espressivi (ritmo, tempo, tono, volume, colore della voce).
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 TEATRO_LAB 1 -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Teatro in italiano</span>
+            <span class="tag tag-hours">14 (20) ore</span>
+          </div>
+          <div class="card-title">Teatro_Lab 1</div>
+          <div class="card-expert">Savino Genovese / Viren Beltramo</div>
+          <div class="card-desc">
+            Due percorsi a scelta: <em>teatro scientifico</em> ispirato a Calvino e alle <em>Cosmicomiche</em>, oppure <em>teatro e letteratura</em> con Queneau e gli <em>Esercizi di stile</em>. La lingua come materiale da costruzione scenica.
+            <strong>Attività</strong>
+          </div>
+          <div class="card-activities">
+            Lavoro su phonè, corpo, ritmi e spazio; creazione o adattamento di un testo; allestimento dello spettacolo.
+          </div>
+          <div class="card-product">
+            <span class="icon">🎭</span>
+            <span>Spettacolo teatrale</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 TEATRO_LAB 2 -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Teatro in italiano</span>
+            <span class="tag tag-hours">14 (20) ore</span>
+          </div>
+          <div class="card-title">Teatro_Lab 2</div>
+          <div class="card-expert">Valentina Aicardi</div>
+          <div class="card-wip">
+            Descrizione in fase di definizione — i contenuti dettagliati saranno comunicati prima dell'apertura delle iscrizioni.
+          </div>
+          <div class="card-product" style="margin-top: 12px;">
+            <span class="icon">🎭</span>
+            <span>Spettacolo teatrale</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 GIORNALISMO DIGITALE -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Giornalismo digitale</span>
+            <span class="tag tag-hours">7–10 ore</span>
+          </div>
+          <div class="card-title">Giornalismo digitale</div>
+          <div class="card-expert">Luca Indemini / Paolo Piacenza</div>
+          <div class="card-desc">
+            Come si scrive per il web e per l'orecchio. Due linguaggi a confronto: l'articolo online e il podcast. Si lavora su fonti, titolazione, stile e uso consapevole dell'intelligenza artificiale nel giornalismo.
+            <strong>Attività</strong>
+          </div>
+          <div class="card-activities">
+            Scrivere per il web: articoli, interviste, verifica delle fonti, uso dell'IA; podcast: scrittura del testo, costruzione sonora, prove di registrazione.
+          </div>
+          <div class="card-product">
+            <span class="icon">📰</span>
+            <span>Articolo web + podcast</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 FACT-CHECKING -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Comunicazione giornalistica</span>
+            <span class="tag tag-hours">7–10 ore</span>
+          </div>
+          <div class="card-title">Fact-Checking</div>
+          <div class="card-expert">Anna Segre</div>
+          <div class="card-desc">
+            Come si riconosce una notizia vera da una falsa? Il laboratorio affronta gli strumenti concreti del giornalismo di qualità: fonti, interviste, data journalism, titoli.
+            <strong>Attività</strong>
+          </div>
+          <div class="card-activities">
+            La notizia e le sue componenti; gerarchia delle fonti; come si conduce e si trascrive un'intervista; data journalism; l'arte del titolo: teoria ed esercitazioni pratiche.
+          </div>
+          <div class="card-product">
+            <span class="icon">📄</span>
+            <span>Articolo giornalistico</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 L'AVVENTURA DEL RACCONTO -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Forme della narrazione</span>
+            <span class="tag tag-hours">7–10 ore</span>
+          </div>
+          <div class="card-title">L'avventura del racconto</div>
+          <div class="card-expert">Massimo Quaglia</div>
+          <div class="card-desc">
+            I <em>topoi</em> narrativi che attraversano i secoli e migrano dalla pagina scritta allo schermo. Visione e analisi di trasposizioni cinematografiche di testi letterari: cosa si perde, cosa si guadagna, cosa si trasforma nel passaggio da un medium all'altro.
+          </div>
+        </div>
+      </div>
+
+      <!-- 9 DIGITAL EDUCATION -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Educazione civica</span>
+            <span class="tag tag-hours">7–10 ore</span>
+          </div>
+          <div class="card-title">Digital Education</div>
+          <div class="card-expert">Emiliano Darchini</div>
+          <div class="card-desc">
+            Internet ha cambiato le democrazie liberali — come, in quale direzione e con quali conseguenze? Il laboratorio sviluppa competenze digitali concrete per leggere il presente con consapevolezza e responsabilità civica.
+          </div>
+        </div>
+      </div>
+
+      <!-- 10 FILM, FATTI SOTTO CHE TI SPIEGO -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Critica cinematografica</span>
+            <span class="tag tag-hours">7 ore</span>
+          </div>
+          <div class="card-title">Film, fatti sotto che ti spiego!</div>
+          <div class="card-expert">Enrico Caiano</div>
+          <div class="card-desc">
+            Titolo ironico, contenuto serio: come si costruisce una recensione cinematografica? Il laboratorio alterna consigli pratici e tecniche di scrittura per imparare a guardare i film in modo più profondo — e a scriverne in modo più efficace.
+          </div>
+        </div>
+      </div>
+
+      <!-- 11 POESIA TERAPEUTICA -->
+      <div class="card" data-area="ita">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Scrittura poetica</span>
+          </div>
+          <div class="card-title">Poesia terapeutica</div>
+          <div class="card-expert">Bianchi Mian / Gariglio</div>
+          <div class="card-desc">
+            Laboratorio di scrittura poetica con una vocazione terapeutica: abitare le parole per scrivere sé stessi e, attraverso il linguaggio, costruire e reinventare il proprio mondo. Non serve essere "bravi" in letteratura — serve avere qualcosa da dire.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /cards-grid -->
+  </section>
+
+  <!-- ═══ SEZIONE LATINO & GRECO ═══ -->
+  <section class="section-lat" id="latino">
+    <div class="section-header">
+      <div class="section-stripe"></div>
+      <div>
+        <div class="section-label">Area Linguaggi e Comunicazione</div>
+        <div class="section-title">Laboratori di Latino e Greco</div>
+        <div class="section-desc">Epigrafia, recitazione, teatro classico, arte e letteratura antica</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <!-- 1 LOGHI GRAFFITI E MALEDIZIONI -->
+      <div class="card" data-area="lat">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Epigrafia</span>
+            <span class="tag tag-hours">7–10 ore</span>
+          </div>
+          <div class="card-title">Loghi, graffiti e maledizioni</div>
+          <div class="card-expert">Mattia Balbo</div>
+          <div class="card-desc">
+            I <em>mass media</em> dell'antica Roma: come comunicavano i Romani prima della stampa e di internet? Iscrizioni ufficiali, graffiti sui muri di Pompei, monete come propaganda, programmi elettorali incisi nella pietra.
+            <strong>Attività</strong>
+          </div>
+          <div class="card-activities">
+            Introduzione all'epigrafia; sigle e abbreviazioni latine; latino epigrafico rispetto al latino letterario; come si legge e si interpreta un'iscrizione.
+          </div>
+          <div class="card-product">
+            <span class="icon">🏛️</span>
+            <span>Lettura e interpretazione di un'iscrizione latina</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 GIALLO ALL'ABBAZIA DI NOVALESA -->
+      <div class="card" data-area="lat">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Lingua e letteratura</span>
+            <span class="tag tag-hours">7–10 ore</span>
+          </div>
+          <div class="card-title">Giallo all'Abbazia di Novalesa</div>
+          <div class="card-expert">Alberto Borgatta</div>
+          <div class="card-wip">
+            Contenuto e attività in fase di definizione — i dettagli saranno comunicati prima dell'apertura delle iscrizioni.
+          </div>
+          <div class="card-product" style="margin-top:12px;">
+            <span class="icon">🎲</span>
+            <span>Gioco da tavolo o role game</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 ODISSETTE -->
+      <div class="card" data-area="lat">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Recitazione · Metrica greca</span>
+          </div>
+          <div class="card-title">Odissette</div>
+          <div class="card-expert">Stefano Cavanna</div>
+          <div class="card-desc">
+            Come suonava l'Odissea ai tempi di Omero — quando veniva cantata, non letta? Il laboratorio ricostruisce la dimensione orale e performativa del poema attraverso la pronuncia ricostruita del greco antico.
+            <strong>Attività</strong>
+          </div>
+          <div class="card-activities">
+            Pronuncia del greco omerico; metrica dell'esametro; tecniche di interpretazione fonologica e teatrale; esercizi su passi scelti dell'Odissea.
+          </div>
+          <div class="card-product">
+            <span class="icon">📜</span>
+            <span>Lettura e interpretazione teatrale di passi dell'Odissea</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 THEATRUM 1 -->
+      <div class="card" data-area="lat">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Teatro in latino</span>
+            <span class="tag tag-hours">14 ore</span>
+          </div>
+          <div class="card-title">Theatrum 1 — <em>Latine loqui et agere</em></div>
+          <div class="card-expert">Micol Jalla</div>
+          <div class="card-desc">
+            Si recita Plauto <em>in latino</em>. Il laboratorio affronta in modo concreto il problema della trasposizione teatrale: come si adatta un testo latino antico per renderlo vivo sulla scena moderna? Lingua, ritmo, battute — tutto deve funzionare per un pubblico di oggi.
+          </div>
+          <div class="card-product">
+            <span class="icon">🎭</span>
+            <span>Spettacolo in latino</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 THEATRUM 2 -->
+      <div class="card" data-area="lat">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Teatro classico</span>
+            <span class="tag tag-hours">14 (20) ore</span>
+          </div>
+          <div class="card-title">Theatrum 2 — Autore a scelta</div>
+          <div class="card-expert">Micol Jalla</div>
+          <div class="card-desc">
+            Il gruppo sceglie insieme l'autore classico da portare in scena. Poi si lavora su tutto il processo: dalla scelta del testo alla stesura del copione, fino all'allestimento.
+            <strong>Attività</strong>
+          </div>
+          <div class="card-activities">
+            Scrittura del testo; lettura guidata e interpretazione; esercizi su corpo, ritmo, intonazione; allestimento dello spettacolo.
+          </div>
+          <div class="card-product">
+            <span class="icon">🎭</span>
+            <span>Spettacolo teatrale</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 THEATRUM 3 -->
+      <div class="card" data-area="lat">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Teatro classico</span>
+            <span class="tag tag-hours">14 (20) ore</span>
+          </div>
+          <div class="card-title">Theatrum 3 — Plauto, Aristofane o Sallustio</div>
+          <div class="card-expert">Francesco Puleo</div>
+          <div class="card-desc">
+            Tre testi, tre mondi: il <em>Miles gloriosus</em> di Plauto (commedia), gli <em>Acarnesi</em> di Aristofane (commedia politica greca), la <em>Congiura di Catilina</em> di Sallustio (storia come dramma). Il gruppo sceglierà il testo da allestire.
+            <strong>Attività</strong>
+          </div>
+          <div class="card-activities">
+            Esercizi fisici e vocali; improvvisazione; recitazione; allestimento dello spettacolo.
+          </div>
+          <div class="card-product">
+            <span class="icon">🎭</span>
+            <span>Spettacolo teatrale</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 THEATRUM 4 -->
+      <div class="card" data-area="lat">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Teatro classico · Greco</span>
+            <span class="tag tag-hours">14 (20) ore</span>
+          </div>
+          <div class="card-title">Theatrum 4 — Aristofane!</div>
+          <div class="card-expert">Savino Genovese / Viren Beltramo</div>
+          <div class="card-desc">
+            Aristofane portato in scena: un teatro che è politica, satira, corpo e linguaggio allo stesso tempo. Il laboratorio lavora sull'interezza del processo teatrale.
+            <strong>Attività</strong>
+          </div>
+          <div class="card-activities">
+            Phonè, corpo, ritmi e spazio; creazione o adattamento di testo drammaturgico; allestimento dello spettacolo.
+          </div>
+          <div class="card-product">
+            <span class="icon">🎭</span>
+            <span>Spettacolo teatrale</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 THEATRUM 5 -->
+      <div class="card" data-area="lat">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Teatro classico · Greco</span>
+            <span class="tag tag-hours">14 (20) ore</span>
+          </div>
+          <div class="card-title">Theatrum 5 — Sulle nuvole!</div>
+          <div class="card-expert">Savarino</div>
+          <div class="card-desc">
+            Una rivisitazione moderna delle <em>Nuvole</em> di Aristofane. Gli studenti costruiranno i personaggi e le battute: Socrate, i sofisti, la crisi dell'educazione. Una commedia di 2400 anni fa che parla sorprendentemente del presente.
+          </div>
+          <div class="card-product">
+            <span class="icon">🎭</span>
+            <span>Spettacolo teatrale</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9 EKPHRASIS -->
+      <div class="card" data-area="lat">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <div class="card-ambito-row">
+            <span class="tag tag-ambito">Arte e letteratura</span>
+          </div>
+          <div class="card-title">Ekphrasis</div>
+          <div class="card-expert">Cavanna</div>
+          <div class="card-wip">
+            Descrizione in fase di definizione — i dettagli saranno comunicati prima dell'apertura delle iscrizioni.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /cards-grid -->
+  </section>
+
+  <!-- ═══ PERIODI ═══ -->
+  <div class="periodi-section">
+    <h3>Quando si svolgono i laboratori</h3>
+    <div class="periodi-grid">
+      <div class="periodo">
+        <div class="periodo-n">Periodo 1</div>
+        <div class="periodo-date">28 set — 8 nov</div>
+        <div class="periodo-note">Lunedì · 7ª ora</div>
+      </div>
+      <div class="periodo">
+        <div class="periodo-n">Periodo 2</div>
+        <div class="periodo-date">16 nov — 22 feb</div>
+        <div class="periodo-note">Lunedì · 7ª ora</div>
+      </div>
+      <div class="periodo">
+        <div class="periodo-n">Periodo 3</div>
+        <div class="periodo-date">1 mar — 19 apr</div>
+        <div class="periodo-note">Lunedì · 7ª ora</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Liceo Classico Alfieri · Torino &nbsp;·&nbsp; LIBERLAB 2026–27 &nbsp;·&nbsp; III Liceo
+</footer>
+
+<script>
+// ── Filtro per area ──
+function filtra(area, btn) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelectorAll('.card').forEach(card => {
+    if (area === 'all' || card.dataset.area === area) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  // nascondi/mostra section-header se tutti i card sono hidden
+  document.querySelectorAll('section').forEach(sec => {
+    const visibili = sec.querySelectorAll('.card:not(.hidden)').length;
+    sec.style.display = visibili === 0 ? 'none' : '';
+  });
+}
+
+// ── Animate on scroll ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, (entry.target.dataset.delay || 0));
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.card').forEach((card, i) => {
+  card.dataset.delay = (i % 3) * 80;
+  observer.observe(card);
+});
+</script>
+</body>
+</html>
